@@ -1,0 +1,48 @@
+# Env prefix matches internal/app.AppName (envconfig): ORDER_PACK_CALCULATOR_*
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: packs
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d packs"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "5432:5432"
+
+  app:
+    build:
+      context: ../..
+      dockerfile: deployment/localCalc/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      ORDER_PACK_CALCULATOR_SERVER_HOST: "0.0.0.0"
+      ORDER_PACK_CALCULATOR_SERVER_PORT: "8080"
+      ORDER_PACK_CALCULATOR_SERVER_READ_TIMEOUT: "10s"
+      ORDER_PACK_CALCULATOR_SERVER_WRITE_TIMEOUT: "10s"
+      ORDER_PACK_CALCULATOR_DATABASE_HOST: postgres
+      ORDER_PACK_CALCULATOR_DATABASE_PORT: "5432"
+      ORDER_PACK_CALCULATOR_DATABASE_USER: app
+      ORDER_PACK_CALCULATOR_DATABASE_PASSWORD: app
+      ORDER_PACK_CALCULATOR_DATABASE_NAME: packs
+      ORDER_PACK_CALCULATOR_DATABASE_SSLMODE: disable
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1:8080/ready || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+      start_period: 15s
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:

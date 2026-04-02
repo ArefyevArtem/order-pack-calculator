@@ -1,0 +1,17 @@
+# Regenerate: make mocks  (mockery v2.52.x)
+issue-845-fix: true
+packages:
+  order-pack-calculator/internal/usecase/calculator:
+    config:
+      dir: internal/usecase/calculator/mocks
+      outpkg: mocks
+      filename: pack_store.go
+    interfaces:
+      PackStore:
+  order-pack-calculator/internal/api/http/controller/calculator:
+    config:
+      dir: internal/api/http/controller/calculator/mocks
+      outpkg: mocks
+      filename: use_case.go
+    interfaces:
+      UseCase:

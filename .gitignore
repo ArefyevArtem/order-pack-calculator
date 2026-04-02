@@ -1,0 +1,33 @@
+# Secrets — use .env.example as template; never commit real values
+.env
+deployment/localCalc/.env
+
+# Go build / test artifacts
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+/bin/
+/dist/
+
+# Coverage
+*.coverprofile
+coverage.out
+coverage.html
+
+# Go workspace (local)
+go.work
+go.work.sum
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
