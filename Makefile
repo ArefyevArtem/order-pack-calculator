@@ -1,13 +1,10 @@
 COMPOSE_FILE := deployment/localCalc/docker-compose.yml
 COMPOSE_PROJECT := orderpack
 
-.PHONY: test test-short test-integration mocks up down build logs
+.PHONY: test test-integration mocks up down build logs
 
 test:
 	go test ./...
-
-test-short:
-	go test ./... -short
 
 test-integration:
 	go test -tags=integration ./...

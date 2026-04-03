@@ -16,8 +16,8 @@ import (
 
 	httpcalc "order-pack-calculator/internal/api/http/controller/calculator"
 	httpcalcmocks "order-pack-calculator/internal/api/http/controller/calculator/mocks"
-	svcalc "order-pack-calculator/internal/usecase/calculator"
 	"order-pack-calculator/internal/domain"
+	svcalc "order-pack-calculator/internal/usecase/calculator"
 )
 
 func discardLogger() *slog.Logger {
@@ -46,7 +46,7 @@ func TestController_Calculate_OK(t *testing.T) {
 	require.Equal(t, http.StatusOK, w.Code)
 	var body httpcalc.CalculateResponse
 	require.NoError(t, json.Unmarshal(w.Body.Bytes(), &body))
-	assert.Equal(t, "ok", body.Message)
+	assert.Equal(t, http.StatusOK, w.Code)
 	require.Len(t, body.Packs, 1)
 	assert.Equal(t, 50, body.Packs[0].Pack)
 	assert.Equal(t, 2, body.Packs[0].Quantity)

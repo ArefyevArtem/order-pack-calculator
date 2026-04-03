@@ -37,7 +37,6 @@ func (r *PackRepository) List(ctx context.Context) ([]int, error) {
 }
 
 // ReplaceAll replaces the full set of pack sizes in a single transaction.
-// Duplicate sizes in the slice are rejected (unique constraint).
 func (r *PackRepository) ReplaceAll(ctx context.Context, sizes []int) error {
 	tx, err := r.pool.Begin(ctx)
 	if err != nil {
@@ -60,6 +59,3 @@ func (r *PackRepository) ReplaceAll(ctx context.Context, sizes []int) error {
 	}
 	return nil
 }
-
-// Pool exposes the underlying pool for graceful shutdown (optional).
-func (r *PackRepository) Pool() *pgxpool.Pool { return r.pool }

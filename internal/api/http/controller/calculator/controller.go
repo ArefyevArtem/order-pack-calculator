@@ -33,7 +33,7 @@ func New(uc UseCase, log *slog.Logger) *Controller {
 // RegisterRoutes mounts /api/v1 routes (PUT replaces the full pack size list).
 func (c *Controller) RegisterRoutes(r *gin.Engine) {
 	api := r.Group("/api/v1")
-	
+
 	api.PUT("/pack-sizes", c.replacePackSizes)
 	api.POST("/calculate", c.calculate)
 }
@@ -96,8 +96,7 @@ func (c *Controller) calculate(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, CalculateResponse{
-		Packs:   toPackLines(res.Packs),
-		Message: "ok",
+		Packs: toPackLines(res.Packs),
 	})
 }
 

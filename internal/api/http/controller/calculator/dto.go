@@ -41,8 +41,7 @@ type PackLine struct {
 
 // CalculateResponse is the JSON envelope for calculate.
 type CalculateResponse struct {
-	Packs   []PackLine `json:"packs"`
-	Message string     `json:"message,omitempty"`
+	Packs []PackLine `json:"packs"`
 }
 
 // ErrorResponse is the JSON body for all API error responses (4xx/5xx).

@@ -9,17 +9,9 @@ import (
 // ErrNoExactPacking is returned when no combination of the given sizes sums to the target exactly.
 var ErrNoExactPacking = errors.New("cannot reach exact amount with given pack sizes")
 
-// MinPacks solves the unbounded integer knapsack in “fewest items” form (same as classic coin change):
-// given unlimited packs of each size in sizes, reach target exactly using the minimum total number of packs.
-//
-// Caller must pass target > 0 and a non-empty sizes slice (use case validates). If that contract breaks,
-// the function still returns a plain error (not ErrNoExactPacking).
-//
-// Dynamic program: dp[a] = minimum packs to sum to amount a. Transition: for each size s,
-// dp[a] = min(dp[a], dp[a-s]+1) when a >= s and dp[a-s] is reachable.
-// Reconstruction follows parent[a] = which size completed the optimum for a.
-//
-// Complexity O(target * len(sizes)) time, O(target) space.
+// MinPacks: minimum count of unlimited pack sizes that sum to target exactly.
+// Preconditions: target > 0, non-empty positive sizes — else generic error, not ErrNoExactPacking.
+// Bottom-up DP over 1..target, then reconstruct via parent pointers. O(target * len(sizes)) time, O(target) space.
 func MinPacks(sizes []int, target int) (map[int]int, error) {
 	if target <= 0 {
 		return nil, errors.New("target must be positive")

@@ -14,7 +14,7 @@ const AppName = "ORDER_PACK_CALCULATOR"
 // Config holds HTTP server and database settings.
 type Config struct {
 	Server   aphttp.ServerConfig `envconfig:"SERVER"`
-	Database postgres.Config      `envconfig:"DATABASE"`
+	Database postgres.Config     `envconfig:"DATABASE"`
 }
 
 // Load merges optional `.env` in the current working directory with process environment (missing file is ignored).
